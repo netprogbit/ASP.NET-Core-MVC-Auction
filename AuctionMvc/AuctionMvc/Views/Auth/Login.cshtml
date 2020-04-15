@@ -1,0 +1,28 @@
+@model RegisterViewModel
+
+@{
+  ViewData["Title"] = "Login";
+  Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+@await Html.PartialAsync("_Info")
+
+<div class="container w-max-30">
+  <h2 class="text-center p-3">Login</h2>
+  <form method="POST" asp-action="Login" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+      <label asp-for="Email"></label>
+      <input class="form-control" asp-for="Email">
+      <span class="text-danger" asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+      <label asp-for="Password"></label>
+      <input class="form-control" asp-for="Password">
+      <span class="text-danger" asp-validation-for="Password"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+

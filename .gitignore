@@ -1,0 +1,11 @@
+## Ignore files
+
+# Visual Studio Build results
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio cache/options directory
+.vs/

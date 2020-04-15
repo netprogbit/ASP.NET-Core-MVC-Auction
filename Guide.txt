@@ -1,0 +1,7 @@
+Auction Training Project
+
+MS SQL Server must be installed.
+
+Selling a product starts from a moment when the administrator added it to the database.
+
+Selling a product stops from a moment when the administrator deleted it from the database. At this point the auction application sends by email to the winning buyer  about where to buy the product.

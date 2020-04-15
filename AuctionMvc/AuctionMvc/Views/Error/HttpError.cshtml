@@ -1,0 +1,16 @@
+@model HttpErrorViewModel
+
+@{
+  ViewData["Title"] = "HttpError";
+  Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+<div class="d-flex flex-column align-items-center">
+  <h1 class="text-danger">Http Error.</h1>
+  <p>
+    <strong>Error Code:</strong> <code>@Model.Status</code>
+  </p>
+  <p>
+    <strong>@Model.Message</strong>
+  </p>
+</div>

@@ -1,0 +1,36 @@
+@model UserViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container w-max-30">
+    <h2>Editing User</h2>
+    <form method="POST" asp-action="Edit" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="Id"></label>
+            <input class="form-control" asp-for="Id" readonly>
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName"></label>
+            <input class="form-control" asp-for="FirstName">
+            <span class="text-danger" asp-validation-for="FirstName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <input class="form-control" asp-for="LastName">
+            <span class="text-danger" asp-validation-for="LastName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input class="form-control" asp-for="Email">
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Role"></label>
+            <input class="form-control" asp-for="Role">
+            <span class="text-danger" asp-validation-for="Role"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

@@ -1,0 +1,40 @@
+@model ProductViewModel
+
+@{
+  ViewData["Title"] = "Delete";
+}
+
+<div class="container w-max-30">
+  <h2>Deleting Product</h2>
+  <form method="POST" asp-action="Delete" enctype="multipart/form-data">
+    <div class="form-group">
+      <label asp-for="Id"></label>
+      <input class="form-control" asp-for="Id" readonly>
+    </div>
+    <div class="form-group">
+      <label asp-for="CategoryName"></label>
+      <input class="form-control" asp-for="CategoryName" readonly>
+    </div>
+    <div class="form-group">
+      <label asp-for="Name"></label>
+      <input class="form-control" asp-for="Name" readonly>
+    </div>
+    <div class="form-group">
+      <label asp-for="Description"></label>
+      <input class="form-control" asp-for="Description" readonly>
+    </div>
+    <div class="form-group">
+      <label asp-for="Price"></label>
+      <input class="form-control" asp-for="Price" readonly>
+    </div>
+    <div class="form-group">
+      <label asp-for="ImageFile"></label>
+      <img id="previewImg" class="img-fluid rounded mx-auto my-3 d-block" src="@Model.ImageUrl" />
+    </div>
+    <div class="form-group">
+      <label asp-for="Bidder"></label>
+      <input class="form-control" asp-for="Bidder" readonly>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

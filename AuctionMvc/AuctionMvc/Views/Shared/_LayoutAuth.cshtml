@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"]</title>
+  <link href="~/css/vendor.min.css" rel="stylesheet" />
+  <link href="~/css/site.css" rel="stylesheet" />
+  <link href="~/favicon.ico" rel="icon" type="image/x-icon" />
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+          <a class="navbar-brand" href="#">Auction</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="~/Auth/Register">Register</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="~/Auth/Login">Sign In</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        @RenderBody()
+      </div>
+    </div>
+  </div>
+  <script src="~/js/vendor.min.js"></script>
+  <script src="~/js/scripts.js"></script>
+  @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - Auction</title>
+  <link href="~/css/vendor.min.css" rel="stylesheet" />
+  <link href="~/css/site.css" rel="stylesheet" />
+  <link href="~/favicon.ico" rel="icon" type="image/x-icon" />
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+          <a class="navbar-brand" href="#">Auction</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="~/Auction/Home">Home</a>
+              </li>
+              @if (User.IsInRole("admin"))
+              {
+                <li class="nav-item">
+                  <a class="nav-link" href="~/User/Index">Users</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="~/Category/Index">Categories</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="~/Product/Index">Products</a>
+                </li>
+              }
+              <li class="nav-item">
+                <a class="nav-link" href="~/Auth/LogOut">Sign Out</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        @RenderBody()
+      </div>
+    </div>
+  </div>
+  <script src="~/js/vendor.min.js"></script>
+  <script src="~/js/scripts.js"></script>
+  <script>
+    //Override decimal fields validation
+
+    $.validator.methods.range = function (value, element, param) {
+      var globalizedValue = value.replace(",", ".");
+      return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+    }
+
+    $.validator.methods.number = function (value, element) {
+      return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+    }
+
+    // Replace the label text and set preview image URL
+    var onChangeImage = function (event) {
+      var fileName = document.getElementById('imageFile').value.replace("C:\\fakepath\\", "");
+      document.getElementById('filePath').innerHTML = fileName;
+      var imgViewTag = document.getElementById('previewImg');
+      imgViewTag.src = URL.createObjectURL(event.target.files[0]);
+      console.log("imgViewTag.src");
+    };
+  </script>
+  @RenderSection("Scripts", required: false)
+</body>
+</html>

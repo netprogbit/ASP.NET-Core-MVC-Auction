@@ -1,0 +1,45 @@
+@model ProductViewModel
+
+@{
+  ViewData["Title"] = "Edit";
+}
+
+<div class="container w-max-30">
+  <h2>Editing Product</h2>
+  <form method="POST" asp-action="Edit" enctype="multipart/form-data">
+    <div class="form-group">
+      <label asp-for="Id"></label>
+      <input class="form-control" asp-for="Id" readonly>
+    </div>
+    <div class="form-group">
+      <label asp-for="CategoryName"></label>
+      <select class="form-control" asp-for="CategoryName" asp-items="ViewBag.CategoryList"></select>
+    </div>
+    <div class="form-group">
+      <label asp-for="Name"></label>
+      <input class="form-control" asp-for="Name">
+      <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+      <label asp-for="Description"></label>
+      <input class="form-control" asp-for="Description">
+      <span class="text-danger" asp-validation-for="Description"></span>
+    </div>
+    <div class="form-group">
+      <label asp-for="Price"></label>
+      <input class="form-control" asp-for="Price">
+      <span class="text-danger" asp-validation-for="Price"></span>
+    </div>
+    <div class="form-group">
+      <label asp-for="ImageFile"></label>
+      <div class="input-group">
+        <div class="custom-file">
+          <input id="imageFile" class="custom-file-input" type="file" asp-for="ImageFile" onchange="onChangeImage(event)" aria-describedby="inputGroupFileAddon04">
+          <label id="filePath" class="custom-file-label" for="imageFile">Choose file</label>
+        </div>
+      </div>
+      <img id="previewImg" class="img-fluid rounded mx-auto my-3 d-block" src="@Model.ImageUrl" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

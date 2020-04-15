@@ -1,0 +1,67 @@
+@using AuctionMvc.Paginator
+@model PaginatedList<CategoryViewModel>
+
+@{
+  ViewData["Title"] = "Index";
+}
+
+<div class="row my-3">
+  <div class="col">
+    <a class="btn btn-primary" asp-action="Add">Add Category</a>
+  </div>
+  <div class="col">
+    <form class="form-inline justify-content-end" method="get" asp-action="Index">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="SearchString" value="@ViewData["currentFilter"]">
+      <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">Category Name</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (CategoryViewModel c in Model)
+        {
+          <tr>
+            <th scope="row">@c.Id</th>
+            <td>@Html.DisplayFor(modelItem => c.Name)</td>
+            <td>
+              <a class="btn btn-warning mr-1" asp-action="Edit" asp-route-id="@c.Id">Edit</a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    @{
+      var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+      var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+    <nav>
+      <ul class="pagination justify-content-center">
+        <li class="page-item @prevDisabled">
+          <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]">Previous</a>
+        </li>
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+          <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+            <a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-currentFilter="@ViewData["CurrentFilter"]">@i</a>
+          </li>
+        }
+        <li class="page-item @nextDisabled">
+          <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

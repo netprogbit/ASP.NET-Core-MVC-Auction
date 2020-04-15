@@ -1,0 +1,49 @@
+@model ProductViewModel
+
+@{
+  ViewData["Title"] = "Detail";
+}
+
+@await Html.PartialAsync("_Info")
+
+<div class="row">
+  <div class="col d-flex justify-content-center">
+    <div class="w-50">
+      <h2 class="text-center">Auction</h2>
+      <div class="card p-2">
+        <h5 class="card-title">@Model.Name</h5>
+        <img class="card-img-top p-1" src="@Model.ImageUrl">
+        <div class="card-body">
+          <p class="card-text">@Model.Description</p>
+          <div id="seler">
+            <h5 id="seler-price" class="card-title">$@Model.SellerPrice</h5>
+            <a class="btn btn-primary" asp-action="Buy" asp-route-id="@Model.Id">Buy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+  <script>
+
+    // SignalR client
+
+    const hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl("/auction")
+      .build();
+
+    let productId = @Model.Id;
+    hubConnection.on(productId.toString(), function (price) {
+
+      document.getElementById('seler-price').innerHTML = "$" + price;
+
+      if (price == 0)
+        document.getElementById('seler').hidden = true; // Hide buy possibility
+    });
+
+    hubConnection.start();
+  </script>
+}
+
