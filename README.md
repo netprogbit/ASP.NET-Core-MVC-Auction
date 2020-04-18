@@ -1,6 +1,7 @@
 # ASP.NET-Core-MVC-Auction Training project
 ## Used technologies:
-* MS SQL; Entity Framework (Code First);
+* MS SQL;
+* Entity Framework (Code First);
 * SignalR;
 * JWT Authentication;
 * Bootstrap 4;
