@@ -1,4 +1,4 @@
-# ASP.NET-Core-MVC-Auction Training project
+# ASP.NET Core MVC Auction training project
 ## Used technologies:
 * MS SQL;
 * Entity Framework (Code First);
