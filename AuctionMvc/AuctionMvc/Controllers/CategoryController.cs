@@ -57,7 +57,9 @@ namespace AuctionMvc.Controllers
       return View(await PaginatedList<CategoryViewModel>.CreateAsync(categoryVMs, pageNumber ?? 1, pageSize));
     }
 
-    // Call category add view       
+    /// <summary>
+    /// Call category add view
+    /// </summary>
     [HttpGet]
     public IActionResult Add()
     {

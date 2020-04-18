@@ -29,7 +29,9 @@ namespace AuctionMvc.Services
       _appSettings = appSettings.Value;
     }
 
-    // User registration
+    /// <summary>
+    /// User registration
+    /// </summary>
     public async Task<bool> RegisterAsync(User user)
     {
       // Check if the user exists with this email
@@ -60,7 +62,9 @@ namespace AuctionMvc.Services
       return true;
     }
 
-    // User authentication
+    /// <summary>
+    /// User authentication
+    /// </summary>
     public async Task<AccessToken> Authenticate(string email, string password)
     {
       // Check if the user exists with this email and password
@@ -86,12 +90,14 @@ namespace AuctionMvc.Services
       return new AccessToken { UserId = candidate.Id, Token = token };
     }
 
-    // Password encription
-    private static string GetPasswordHash(string password, string salt)
+    /// <summary>
+    /// Password encription
+    /// </summary>
+    private string GetPasswordHash(string password, string key)
     {
       string computedHash;
 
-      using (var hmac = new System.Security.Cryptography.HMACSHA512(Encoding.UTF8.GetBytes(salt)))
+      using (var hmac = new System.Security.Cryptography.HMACSHA512(Encoding.UTF8.GetBytes(key)))
       {
         computedHash = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(password)));
       }

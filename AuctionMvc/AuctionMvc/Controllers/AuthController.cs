@@ -89,7 +89,9 @@ namespace AuctionMvc.Controllers
       return Redirect("~/Auction/Home");
     }
 
-    // Signing out
+    /// <summary>
+    /// Signing out
+    /// </summary>
     [HttpGet]
     public IActionResult LogOut()
     {

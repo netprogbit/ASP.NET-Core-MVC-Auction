@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.DbContexts
 {
+  /// <summary>
+  /// Auction database context
+  /// </summary>
   public class AuctionDbContext : DbContext
   {
     public DbSet<User> Users { get; set; }
@@ -15,11 +18,12 @@ namespace DataLayer.DbContexts
       Database.EnsureCreated();
     }
 
+    /// <summary>
+    /// Default database initialization
+    /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique(); // Email must be unique
-
-      // Default database initialization
+      modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique(); // Email must be unique      
 
       modelBuilder.Entity<User>().HasData(
   new User[]

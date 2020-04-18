@@ -23,13 +23,17 @@ namespace AuctionMvc.Services
       _unitOfWork = unitOfWork;
     }
 
-    // Start of sale
+    /// <summary>
+    /// Start of sale
+    /// </summary>
     public async Task StartSaleAsync(long productId, int price)
     {
       await _auctionHub.Clients.All.SendAsync(productId.ToString(), PriceHelper.IntToDecimal(price)); // Potential buyer price notification
     }
 
-    // Bid offer        
+    /// <summary>
+    /// Bid offer
+    /// </summary>
     public async Task<decimal> Buy(long userId, long productId)
     {
       Product product = await _unitOfWork.Products.GetAsync(productId);
@@ -57,7 +61,9 @@ namespace AuctionMvc.Services
       return PriceHelper.IntToDecimal(product.Price);
     }
 
-    // End of sale
+    /// <summary>
+    /// End of sale
+    /// </summary>
     public async Task StopSale(long productId)
     {
         await _auctionHub.Clients.All.SendAsync(productId.ToString(), 0.00M); // Product sale is over        
