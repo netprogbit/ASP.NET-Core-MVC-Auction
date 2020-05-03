@@ -169,14 +169,15 @@ namespace AuctionMvc.Controllers
     [HttpPost]
     public async Task<IActionResult> Delete(ProductViewModel productVM)
     {
-      string imageName = await DeleteProductAsync(productVM.Id);  // Delete product from DB
-      FileHelper.DeleteFile(imageName); // Detele unnecessary image file            
+      Product product = await _unitOfWork.Products.GetAll().AsNoTracking().SingleOrDefaultAsync(p => p.Id == productVM.Id);
+      await DeleteProductAsync(productVM.Id);  // Delete product from DB      
+      FileHelper.DeleteFile(product.ImageFileName); // Detele unnecessary image file            
       await _auctionService.StopSale(productVM.Id); // Stopping sale
       User userBidder = await _unitOfWork.Users.GetAsync(productVM.Bidder);
 
       if (userBidder != null)
       {
-        _logger.LogError("{0} User ID: {1}. Product info:  {2} | {3} | ${4}, ", MessageHelper.EmailMessageNotSent, productVM.Bidder, productVM.Name, productVM.Description, productVM.Price);
+        _logger.LogError("{0} User ID: {1}. Product info:  {2} | {3} | ${4}, ", MessageHelper.EmailMessageNotSent, product.Bidder, product.Name, product.Description, PriceHelper.IntToDecimal(product.Price));
         EmailHelper.Send(userBidder.Email); // Send info to the buyer about the purchase of the product
       }
       
@@ -248,17 +249,13 @@ namespace AuctionMvc.Controllers
       return oldFileName;
     }
 
-    private async Task<string> DeleteProductAsync(long id)
+    private async Task DeleteProductAsync(long id)
     {
-      string imageName = null;
-
       // Detete product from DB
       using (var dbContextTransaction = _unitOfWork.BeginTransaction())
       {
         try
-        {
-          Product product = await _unitOfWork.Products.GetAll().AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
-          imageName = product.ImageFileName;
+        {          
           _unitOfWork.Products.Delete(id);
           await _unitOfWork.SaveAsync();
           dbContextTransaction.Commit();
@@ -269,8 +266,6 @@ namespace AuctionMvc.Controllers
           throw new Exception("DB Transaction Failed. " + e.Message);
         }
       }
-
-      return imageName;
     }
 
     private void InitCategorySelector()
