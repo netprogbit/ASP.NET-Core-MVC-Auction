@@ -55,7 +55,7 @@ namespace AuctionMvc.Services
         catch (Exception e)
         {
           dbContextTransaction.Rollback();  // Rollbacking DB                     
-          throw new Exception("DB Transaction Failed. " + e.Message);
+          throw new ApplicationException("DB Transaction Failed. " + e.Message);
         }
       }
 
