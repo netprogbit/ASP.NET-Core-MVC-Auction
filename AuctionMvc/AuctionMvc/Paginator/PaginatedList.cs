@@ -1,8 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AuctionMvc.Paginator
 {
@@ -32,10 +30,10 @@ namespace AuctionMvc.Paginator
       get => PageNumber < TotalPages;
     }
 
-    public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize)
+    public static PaginatedList<T> Create(IEnumerable<T> source, int pageNumber, int pageSize)
     {
-      var count = await source.CountAsync();
-      var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+      var count = source.Count();
+      var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
       return new PaginatedList<T>(items, count, pageNumber, pageSize);
     }
   }

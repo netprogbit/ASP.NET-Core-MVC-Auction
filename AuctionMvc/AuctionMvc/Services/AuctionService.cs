@@ -36,7 +36,7 @@ namespace AuctionMvc.Services
     /// </summary>
     public async Task<decimal> Buy(long userId, long productId)
     {
-      Product product = await _unitOfWork.Products.GetAsync(productId);
+      Product product = await _unitOfWork.Products.FindAsync(productId);
       product.Price = product.SellerPrice;
       product.SellerPrice = (int)(product.Price * priceIncreaseCoeff);
       product.Bidder = userId;
