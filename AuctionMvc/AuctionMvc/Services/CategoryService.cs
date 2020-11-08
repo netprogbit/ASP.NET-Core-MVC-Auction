@@ -6,6 +6,7 @@ using DataLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 
 namespace AuctionMvc.Services
@@ -55,10 +56,10 @@ namespace AuctionMvc.Services
                     await _unitOfWork.SaveAsync();
                     dbContextTransaction.Commit();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     dbContextTransaction.Rollback(); // Rollbacking DB      
-                    throw new ApplicationException("DB Transaction Failed. " + e.Message);
+                    ExceptionDispatchInfo.Capture(ex).Throw();
                 }
             }
         }
@@ -91,10 +92,10 @@ namespace AuctionMvc.Services
                     await _unitOfWork.SaveAsync();
                     dbContextTransaction.Commit();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     dbContextTransaction.Rollback(); // Rollbacking DB       
-                    throw new ApplicationException("DB Transaction Failed. " + e.Message);
+                    ExceptionDispatchInfo.Capture(ex).Throw();
                 }
             }
 
