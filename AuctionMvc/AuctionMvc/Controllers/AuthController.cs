@@ -14,9 +14,9 @@ namespace AuctionMvc.Controllers
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
 
-        public AuthController(AuthService authService)
+        public AuthController(IAuthService authService)
         {
             _authService = authService;
         }

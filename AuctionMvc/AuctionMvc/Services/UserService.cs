@@ -1,8 +1,8 @@
 ﻿using AuctionMvc.Helpers;
 using AuctionMvc.Models;
 using AuctionMvc.Paginator;
-using DataLayer;
 using DataLayer.Entities;
+using DataLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace AuctionMvc.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(UnitOfWork unitOfWork)
+        public UserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -37,7 +37,7 @@ namespace AuctionMvc.Services
             }).ToList();
 
             return PaginatedList<UserViewModel>.Create(categoryVMs, pageNumber ?? 1, PaginatorHelper.DefaultPageSize);
-        }                
+        }
 
         public async Task EditAsync(UserViewModel userVM)
         {

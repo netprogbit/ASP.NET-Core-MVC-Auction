@@ -4,6 +4,7 @@ using AuctionMvc.Services;
 using AuctionMvc.Settings;
 using DataLayer;
 using DataLayer.DbContexts;
+using DataLayer.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -53,12 +54,12 @@ namespace AuctionMvc
             });
 
             services.AddDbContext<AuctionDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<UnitOfWork>();
-            services.AddScoped<AuthService>();
-            services.AddScoped<UserService>();
-            services.AddScoped<CategoryService>();
-            services.AddScoped<ProductService>();
-            services.AddScoped<AuctionService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IAuctionService, AuctionService>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

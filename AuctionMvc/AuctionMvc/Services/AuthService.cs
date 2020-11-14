@@ -1,8 +1,8 @@
 using AuctionMvc.Helpers;
 using AuctionMvc.Models;
 using AuctionMvc.Settings;
-using DataLayer;
 using DataLayer.Entities;
+using DataLayer.UnitOfWork;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -18,12 +18,12 @@ namespace AuctionMvc.Services
     /// <summary>
     /// Authenticate service
     /// </summary>
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private readonly AppSettings _appSettings;
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AuthService(IOptions<AppSettings> appSettings, UnitOfWork unitOfWork)
+        public AuthService(IOptions<AppSettings> appSettings, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _appSettings = appSettings.Value;
@@ -35,14 +35,14 @@ namespace AuctionMvc.Services
         public async Task<bool> RegisterAsync(RegisterViewModel userVM)
         {
             // Check if the user exists with this email
-            
+
             User candidate = await _unitOfWork.Users.FindAsync(u => u.Email == userVM.Email);
 
             if (candidate != null)
                 return false;
 
             User user = new User { FirstName = userVM.FirstName, LastName = userVM.LastName, Email = userVM.Email, Password = GetPasswordHash(userVM.Password, _appSettings.Secret), Role = "user" };
-            
+
             // DB Transaction
             using (var dbContextTransaction = _unitOfWork.BeginTransaction())
             {

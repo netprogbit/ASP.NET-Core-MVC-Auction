@@ -1,8 +1,8 @@
 ﻿using AuctionMvc.Helpers;
 using AuctionMvc.Models;
 using AuctionMvc.Paginator;
-using DataLayer;
 using DataLayer.Entities;
+using DataLayer.UnitOfWork;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 /// Procuct actions service
 /// </summary>
 namespace AuctionMvc.Services
-{    
-    public class ProductService
+{
+    public class ProductService : IProductService
     {
         protected readonly ILogger<ProductService> _logger;
-        private readonly UnitOfWork _unitOfWork;
-        private readonly AuctionService _auctionService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAuctionService _auctionService;
 
-        public ProductService(ILogger<ProductService> logger, UnitOfWork unitOfWork, AuctionService auctionService)
+        public ProductService(ILogger<ProductService> logger, IUnitOfWork unitOfWork, IAuctionService auctionService)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -51,7 +51,7 @@ namespace AuctionMvc.Services
         }
 
         public async Task AddAsync(ProductViewModel productVM)
-        {            
+        {
             string newFileName = FileHelper.GetUniqueFileName(productVM.ImageFile?.FileName);
             await AddProductAsync(productVM, newFileName);
             await FileHelper.AddImageAsync(productVM.ImageFile, newFileName);
@@ -83,10 +83,10 @@ namespace AuctionMvc.Services
                     ExceptionDispatchInfo.Capture(ex).Throw();
                 }
             }
-        }        
+        }
 
         public async Task EditAsync(ProductViewModel productVM)
-        {            
+        {
             string newFileName = FileHelper.GetUniqueFileName(productVM.ImageFile?.FileName);
             string oldFileName = await UpdateProductAsync(productVM, newFileName);
             await FileHelper.UpdateImageAsync(productVM.ImageFile, oldFileName, newFileName);
@@ -143,7 +143,7 @@ namespace AuctionMvc.Services
             {
                 _logger.LogError("{0} User ID: {1}. Product info:  {2} | {3} | ${4}, ", MessageHelper.EmailMessageNotSent, product.Bidder, product.Name, product.Description, PriceHelper.IntToDecimal(product.Price));
                 EmailHelper.Send(userBidder.Email); // Send info to the buyer about the purchase of the product
-            }            
+            }
         }
 
         private async Task DeleteProductAsync(long id)

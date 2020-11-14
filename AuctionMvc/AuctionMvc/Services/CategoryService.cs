@@ -1,8 +1,8 @@
 ﻿using AuctionMvc.Helpers;
 using AuctionMvc.Models;
 using AuctionMvc.Paginator;
-using DataLayer;
 using DataLayer.Entities;
+using DataLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace AuctionMvc.Services
 {
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryService(UnitOfWork unitOfWork)
+        public CategoryService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

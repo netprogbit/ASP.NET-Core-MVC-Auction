@@ -15,10 +15,10 @@ namespace AuctionMvc.Controllers
     [Authorize]
     public class AuctionController : Controller
     {
-        private readonly AuctionService _auctionService;
-        private readonly ProductService _productService;
+        private readonly IAuctionService _auctionService;
+        private readonly IProductService _productService;
 
-        public AuctionController(AuctionService auctionService, ProductService productService)
+        public AuctionController(IAuctionService auctionService, IProductService productService)
         {
             _auctionService = auctionService;
             _productService = productService;
